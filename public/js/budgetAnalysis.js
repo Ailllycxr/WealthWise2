@@ -1,27 +1,18 @@
 const incomeChart = document.querySelector("#income-chart");
 const expenseChart = document.querySelector("#expense-chart");
-const incomeBar = document.querySelector("#income-bar-chart");
-const expenseBar = document.querySelector("#expense-bar-chart");
+const incomeBar = document.querySelector("#budget-trend");
 
+//there will only be five top category in the color, the rest will be group into others
 const colors = [
-  "#FF6384",
-  "#36A2EB",
-  "#FFCE56",
-  "#33FF99",
-  "#9966FF",
-  "#FF5733",
-  "#4CAF50",
-  "#FFC0CB",
-  "#8A2BE2",
-  "#00FFFF",
-  "#FF4500",
-  "#ADFF2F",
-  "#9370DB",
-  "#7FFF00",
-  "#8B4513",
-  "#FFD700",
+  "#b18dff",
+  "#f8acff",
+  "#5c7aff",
+  "#f5f4e5",
+  "#101010"
 ];
 
+
+//May not need the below code  
 const getIncomeItems = async (user_id, budget_id) => {
   try {
     const response = await fetch(`/api/revenue/${user_id}/${budget_id}`, {
@@ -29,11 +20,12 @@ const getIncomeItems = async (user_id, budget_id) => {
       headers: { "Content-Type": "application/json" },
     });
     return response;
+  
   } catch (error) {
     console.log(error);
   }
 };
-
+//May not need the below code  
 const getExpenseItems = async (user_id, budget_id) => {
   try {
     const response = await fetch(`/api/expense/${user_id}/${budget_id}`, {
@@ -45,13 +37,15 @@ const getExpenseItems = async (user_id, budget_id) => {
     console.log(error);
   }
 };
-
+//May coule be the one that have total expense 
 const getCurrentBudget = async (user_id, budget_id) => {
   try {
     const response = await fetch(`/api/budget/${user_id}/${budget_id}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
+    const budgetData = response.get({ plain: true });
+    res.render('budgetAnalysis', budgetData);
     return response;
   } catch (error) {
     console.log(error);
