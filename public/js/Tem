@@ -44,9 +44,8 @@ const getCurrentBudget = async (user_id, budget_id) => {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
-    const budgetData = response.get({ plain: true });
-    res.render('budgetAnalysis', budgetData);
-    return response;
+   
+    return budgetData;
   } catch (error) {
     console.log(error);
   }
@@ -108,6 +107,36 @@ const calculateCategoryTotals = async (data) => {
     percentages: categoryPercentages,
   };
 };
+
+
+var barColors = [
+  "#b18dff",
+  "#f8acff",
+  "#5c7aff",
+  "#f5f4e5",
+  "#101010",
+];
+const renderIncomepie= async(data)=> {
+  const labels = Object.keys(data.totals);
+  const values = Object.values(data.totals);
+  const chartData = {
+  labels:labels, //req.body.monthlyexpense
+  new Chart (chart1, {
+      type: "pie",
+      data: {
+          labels: xValues,
+          datasets: [
+          {
+              backgroundColor: barColors,
+              data: yValues,
+          },
+          ],
+      },
+      const incomeChartVar = new Chart(incomeChart, {
+        type: "pie",
+        data: chartData,
+      }});
+  })};
 
 const renderIncomeChart = async (data) => {
   const labels = Object.keys(data.totals);

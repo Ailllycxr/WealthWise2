@@ -75,43 +75,49 @@ router.get("/:id", useAuth, async (req, res) => {
   }
 });
 
-router.get("/:user/:budgetid", useAuth, async (req, res) => {
-  try {
-    const singleBudget = await Budget.findOne({
-      attributes: [
-        "id",
-        "budget_name",
-        "total_expense",
-        "total_income",
-        "total_savings",
-      ],
-      where: {
-        user_budget_id: req.params.user,
-        id: req.params.budgetid,
-      },
-      include: [
-        {
-          model: User,
-          attributes: ["id", "username"],
-          include: [
-            {
-              model: Income,
-              attributes: ["id", "amount", "description", "category"],
-            },
-            {
-              model: Expense,
-              attributes: ["id", "amount", "description", "category"],
-            },
-          ],
-        },
-      ],
-    });
-    res.json(singleBudget);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-});
+// router.get("/:user/:budgetid", useAuth, async (req, res) => {
+//   try {
+//     const singleBudget = await Budget.findOne({
+//       attributes: [
+//         "id",
+//         "budget_name",
+//         "total_expense",
+//         "total_income",
+//         "total_savings",
+//       ],
+//       where: {
+//         user_budget_id: req.params.user,
+//         id: req.params.budgetid,
+//       },
+//       include: [
+//         {
+//           model: User,
+//           attributes: ["id", "username"],
+//           include: [
+//             {
+//               model: Income,
+//               attributes: ["id", "amount", "description", "category"],
+//             },
+//             {
+//               model: Expense,
+//               attributes: ["id", "amount", "description", "category"],
+//             },
+//           ],
+//         },
+//       ],
+//     });
+   
+//     const budgetData = singleBudget.get({ plain: true });
+//     console.log(budgetData)
+//     res.render('budgetAnalysis', budgetData);
+   
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json(err);
+//   }
+// });
+
+
 
 router.post("/", useAuth, async (req, res) => {
   try {
