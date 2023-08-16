@@ -64,29 +64,65 @@ router.get("/budget", useAuth, async (req, res) => {
       }
       
     })
-    const  totalBudgetData= totalBudget.map(budget => budget.get({plain : true}))
-    let totalExpense;
-    function totalUserExpense(totalBudgetData){
-      for (var i=0; i< totalBudgetData.length; i++){
-       totalExpense += totalBudgetData[i].total_expense
-      }
-    }
-    console.log(totalBudgetData)
+    const  totalBudgetData = totalBudget.map(budget => budget.get({plain : true}));
     
+    renderTotalExpense = totalUserExpense(totalBudgetData)
+    renderTotalRevenue = totalUserRevenue(totalBudgetData)
+    renderTotalSavings = totalUserSaving(totalBudgetData)
 
+    console.log(totalBudgetData);
+    console.log(renderTotalExpense);
+ 
+    
     res.render("budgetAnalysis", {
       logged_in: req.session.logged_in,
-      totalBudgetData:totalBudgetData
+      renderTotalExpense,
+      renderTotalRevenue,
+      renderTotalSavings
 
-
-    });
-    
+    }); 
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
+function totalUserExpense(totalBudgetData){
+  let totalExpense=0
+  for (var i=0; i< totalBudgetData.length; i++){
+    if(totalBudgetData[i].total_expense===null){
+      totalExpense += 0
+    } else {
+      totalExpense += totalBudgetData[i].total_expense
+    }
+  }
+  return totalExpense
+}
 
 
+
+
+function totalUserRevenue(totalBudgetData){
+     let totalRevenue=0;
+  for (var i=0; i< totalBudgetData.length; i++){
+  if(totalBudgetData[i].total_income===null){
+    totalRevenue += 0
+  } else {
+    totalRevenue += totalBudgetData[i].total_income
+  }
+  return totalRevenue
+}}
+
+
+
+function totalUserSaving(totalBudgetData){
+  let totalSavings=0;
+  for (var i=0; i< totalBudgetData.length; i++){
+  if(totalBudgetData[i].total_savings===null){
+    totalSavings += 0
+  } else {
+    totalSavings += totalBudgetData[i].total_savings
+  }
+  return totalSavings
+}}
 
 module.exports = router;

@@ -33,12 +33,9 @@
 
         <div class="card border-0 h-25">
           <div class="card-title fs-3">Insights</div>
-              <p>(1) Your total monthly income of the month is USD </p>
-              {{!-- {{budgetData[0].total_expense}} --}}
-              <p>(2) Your total monthly expense of the month is USD </p>
-              {{!-- {{budgetData[0].total_income}} --}}
-              <p>(3) The gap you can close in your budget is. You can plan how to utilize the money to generate more income.</p>
-               {{!-- {{budgetData[0].saving}} --}}
+              <p>(1) Your total monthly income of the month is USD {{renderTotalExpense}} </p>
+              <p>(2) Your total monthly expense of the month is USD {{renderTotalRevenue}}</p>
+              <p>(3) The gap you can close in your budget is{{renderTotalSavings}}. You can plan how to utilize the money to generate more income.</p>
             </h>
           <p></p>
           <p></p>

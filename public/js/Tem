@@ -2,17 +2,6 @@ const incomeChart = document.querySelector("#income-chart");
 const expenseChart = document.querySelector("#expense-chart");
 const incomeBar = document.querySelector("#budget-trend");
 
-//there will only be five top category in the color, the rest will be group into others
-const colors = [
-  "#b18dff",
-  "#f8acff",
-  "#5c7aff",
-  "#f5f4e5",
-  "#101010"
-];
-
-
-//May not need the below code  
 const getIncomeItems = async (user_id, budget_id) => {
   try {
     const response = await fetch(`/api/revenue/${user_id}/${budget_id}`, {
@@ -218,9 +207,6 @@ const renderExpenseBar = async (data) => {
     data: chartData,
   });
 }
-
-
-
 
 
 const init = async () => {
