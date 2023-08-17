@@ -1,6 +1,6 @@
 <section class="create-budget-section">
   <form class="form-container income">
-    <div id="income-table" ></div>
+    <div id="income-table"></div>
     <h2>Income</h2>
     <div class="income-result"></div>
     <label for="income-name">Income Name</label>
@@ -40,7 +40,7 @@
     <button class="income-btn" type="submit">Add Income</button>
   </form>
   <form class="form-container expense">
-    <div id="expense-table" ></div>
+    <div id="expense-table"></div>
     <h2>Expenses</h2>
     <div class="expense-result"></div>
     <label for="expense-name">Expense Name</label>
@@ -86,11 +86,14 @@
     ></textarea>
     <button class="expense-btn" type="submit">Add Expense</button>
   </form>
-  <form ="form-container" id="budget-update">
-  <button class="submit-budget" type="'submit" id="submit-budget">Budget Snapshot</button>
-</form>
-</section>
+  <a
+    class="btn btn-primary"
+    href="/balanceAnalysis"
+    id="balance-btn"
+    style="height:25%"
+  >Balance Snapshot</a>
 
+</section>
 
 <script src="/js/expense.js"></script>
 <script src="/js/income.js"></script>

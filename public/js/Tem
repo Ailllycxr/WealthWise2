@@ -2,108 +2,38 @@ const incomeChart = document.querySelector("#income-chart");
 const expenseChart = document.querySelector("#expense-chart");
 const incomeBar = document.querySelector("#budget-trend");
 
-const getIncomeItems = async (user_id, budget_id) => {
+
+const colors =[
+"#9FE2BF",
+"#53BDAS",
+"#F5C26B",
+"#CBD6E2",
+"#4FB06D",
+"#CAE7D3",
+"#5C62D6",
+"#EBB8DD",
+]
+//
+const getIncomeItems = async (user_id) => {
   try {
-    const response = await fetch(`/api/revenue/${user_id}/${budget_id}`, {
+    const response = await fetch(`/api/revenue/${user_id}/`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
+    
     return response;
-  
-  } catch (error) {
-    console.log(error);
-  }
-};
-//May not need the below code  
-const getExpenseItems = async (user_id, budget_id) => {
-  try {
-    const response = await fetch(`/api/expense/${user_id}/${budget_id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-//May coule be the one that have total expense 
-const getCurrentBudget = async (user_id, budget_id) => {
-  try {
-    const response = await fetch(`/api/budget/${user_id}/${budget_id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-   
-    return budgetData;
   } catch (error) {
     console.log(error);
   }
 };
 
-const requestHandler = async (user_id, budget_id) => {
-  let dataOne, dataTwo, dataThree;
-
-  try {
-    const [responseOne, responseTwo, responseThree] = await Promise.all([
-      getIncomeItems(user_id, budget_id),
-      getExpenseItems(user_id, budget_id),
-      getCurrentBudget(user_id, budget_id),
-    ]);
-
-    dataOne = await responseOne.json();
-    dataTwo = await responseTwo.json();
-    dataThree = await responseThree.json();
-  } catch (error) {
-    console.log(error);
-  }
-  const data = { dataOne, dataTwo, dataThree };
-  return data;
-};
-
-const getSession = async () => {
-  try {
-    const response = await fetch("/api/session/current", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const calculateCategoryTotals = async (data) => {
-  const categoryTotals = {};
-  let totalAmount = 0;
-
-  for (const item of data) {
-    const { category, amount } = item;
-    totalAmount += amount;
-    categoryTotals[category] = (categoryTotals[category] || 0) + amount;
-  }
-
-  const categoryPercentages = {};
-  for (const category in categoryTotals) {
-    const percentage = (categoryTotals[category] / totalAmount) * 100;
-    categoryPercentages[category] = percentage.toFixed(2);
-  }
-
-  return {
-    totals: categoryTotals,
-    percentages: categoryPercentages,
-  };
-};
-
-
-
-
+const income= getIncomeItems.
+console.log(response)
+renderIncomepie(income)
 //render income chart // you need the data in here
-const renderIncomepie= async(data)=> {
-  const labels = Object.keys(data.totals);
-  const values = Object.values(data.totals);
+const renderIncomepie= async({incomeUserData,categoryArray,incomeArrayPer})=> {
+  const labels =categoryArray
+  const values = incomeArrayPer;
   const chartData = {
   labels:labels, //req.body.monthlyexpense
   new Chart (chart1, {
@@ -120,8 +50,9 @@ const renderIncomepie= async(data)=> {
       const incomeChartVar = new Chart(incomeChart, {
         type: "pie",
         data: chartData,
-      }});
-  })};
+      });
+  })}
+};
 
 //render expense chart // you need the data in here
 const renderIncomeChart = async (data) => {
@@ -158,55 +89,74 @@ const renderExpenseChart = async (data) => {
     ],
   };
   const expenseChartVar = new Chart( expenseChart, {
-    type: "pie",
+    type: "line",
     data: chartData,
   });
 };
+// 
 
 
-//render income chart // you need the data in here
-const renderIncomeBar = async (data) => {
-  const labels = Object.keys(data.totals);
-  const values = Object.values(data.totals);
-  
-  const chartData = {
-    labels: labels,
-    datasets: [{
-      label: 'Income by Category',
-      data: values,
-      backgroundColor: colors,
-      borderColor: colors,
-      borderWidth: 1,
+
+
+
+// dont look at this at this moment
+
+//May not need the below code  
+const getExpenseItems = async (user_id) => {
+  try {
+    const response = await fetch(`/api/expense/${user_id}/`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+const getSession = async () => {
+  try {
+    const response = await fetch("/api/session/current", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
     }
-  ],
-  };
-  const expenseChartVar = new Chart( incomeBar, {
-    type: "bar",
-    data: chartData,
-  });
-}
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-//show the chart you need the data in here
-const renderExpenseBar = async (data) => {
-  const labels = Object.keys(data.totals);
-  const values = Object.values(data.totals);
-  
-  const chartData = {
-    labels: labels,
-    datasets: [{
-      label: 'Income by Category',
-      data: values,
-      backgroundColor: colors,
-      borderColor: colors,
-      borderWidth: 1,
-    }
-  ],
+
+//getting data for charts
+const calculateCategoryTotals = async (data) => {
+  const categoryTotals = {};
+  let totalAmount = 0;
+
+  for (const item of data) {
+    const { category, amount } = item;
+    totalAmount += amount;
+    categoryTotals[category] = (categoryTotals[category] || 0) + amount;
+  }
+
+  const categoryPercentages = {};
+  for (const category in categoryTotals) {
+    const percentage = (categoryTotals[category] / totalAmount) * 100;
+    categoryPercentages[category] = percentage.toFixed(2);
+  }
+
+  return {
+    totals: categoryTotals,
+    percentages: categoryPercentages,
   };
-  const expenseChartVar = new Chart( expenseBar, {
-    type: "bar",
-    data: chartData,
-  });
-}
+};
+
+
+
+
 
 
 const init = async () => {

@@ -18,7 +18,6 @@ router.get("/", useAuth, async (req, res) => {
       ],
       where: {
         user_expense_id: userId,
-        budget_id: req.session.budget_id,
       },
       include: [
         {
@@ -63,12 +62,11 @@ router.get("/:id", useAuth, async (req, res) => {
   }
 });
 
-router.get("/:user/:budget", useAuth, async (req, res) => {
+router.get("/:user", useAuth, async (req, res) => {
   try {
     const findExpense = await Expense.findAll({
       where: {
         user_expense_id: req.params.user,
-        budget_id: req.params.budget,
       },
     });
     
@@ -86,7 +84,6 @@ router.post("/", useAuth, async (req, res) => {
       amount: req.body.amount,
       category: req.body.category,
       user_expense_id: req.session.user_id,
-      budget_id: req.session.budget_id,
     });
     console.log(createExpense);
     res.json(createExpense);

@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { useAuth } = require("../utils/auth");
-const {Budget, User,Income, Expense}  = require("../models");
+const { User,Income, Expense}  = require("../models");
 
 
 router.get("/", async (req, res) => {
@@ -39,6 +39,17 @@ router.get("/signup", (req, res) => {
   }
 });
 
+router.get("/reflection", useAuth, async (req, res) => {
+  try {
+    res.render("reflection", {
+      logged_in: req.session.logged_in,
+    });
+    console.log(res);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 router.get("/items", useAuth, async (req, res) => {
   try {
     res.render("items", {
@@ -49,58 +60,57 @@ router.get("/items", useAuth, async (req, res) => {
   }
 });
 
-router.get("/budget", useAuth,async (req, res) => {
+
+router.get("/balanceAnalysis", useAuth, async (req, res) => {
   try {
-  const totalBudget = await Budget.findAll({
+    res.render("balanceAnalysis", {
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
+router.get("/balanceAnalysis",async (req, res) => {
+  try {
+  const dailyExpense = await Expense.findAll({
       attributes:[
         "id",
-        'budget_name',
-        "total_expense",
-        "total_income",
-        "total_savings",
-        "user_budget_id",
+        'date',
+        // [sequelize.fn('sum', sequelize.col('amount')), 'total_amount'],
       ],
-      where:{
-        user_budget_id: req.session.user_id,
-      },
+      // group: ['date'],
+      // where:{
+      //   user_expense_id: req.session.user_id,
+      // },
     })
-  
-  // const dailyExpense = await Expense.findAll({
-  //   attributes:[
-  //     "date",
-  //     // [sequelize.fn('sum', sequelize.col('amount')), 'total_amount']
-  //   ], 
 
-  //   // group: ['date'],
-  //   where:{
-  //     user_expense_id: req.session.user_id,
-  //   },
-  // })
-    const totalBudgetData = totalBudget.map(budget => budget.get({plain : true}));
-    // const dailyExpensetData = dailyExpense.map(expense => expense.get({plain : true}));
-    // const dailyRevenueData = dailyExpense.map(revenue => revenue.get({plain : true}));
-    renderTotalExpense = totalUserExpense(totalBudgetData)
-    renderTotalRevenue = totalUserRevenue(totalBudgetData)
-    // console.log(dailyExpensetData);
-
-  // const dailyRevenue = await Income.findAll({
-  //   attributes:[
-  //     "date",
-  //     'amount',
-  //   ],  
-  //   group: ['date'],
-  //   where:{
-  //     user_budget_id: req.session.user_id,
-  //   },
-  // })
-  // const dailyRevenueData = dailyRevenue.map(data => data.get({plain : true}));
-  // console.log(dailyRevenueData);
-
-    res.render("budgetAnalysis", {
+  const dailyIncome = await Income.findAll({
+        attributes:[
+          "id",
+          'date',
+          // [sequelize.fn('sum', sequelize.col('amount')), 'total_amount'],
+        ],
+        // group: ['date'],
+        // where:{
+        //   user_income_id: req.session.user_id,
+        // },
+    }) 
+    const dailyExpenseData = dailyExpense.map(income => income.get({plain : true}));
+    const dailyIncomeData = dailyIncome.map(income => income.get({plain : true}));
+    console.log(dailyExpenseData);
+    console.log(dailyIncomeData)
+    res.render("balanceAnalysis", {
       logged_in: req.session.logged_in,
-      renderTotalExpense,
-      renderTotalRevenue,
-
+      // renderTotalExpense,
+      // renderTotalRevenue,
+      // incomePieCategory
+      // incomePieAmount
+      // expensePieCategory
+      // expensePieAmount
+      // lineDate
+      // lineAmount
     }); 
   } catch (err) {
     console.log(err)
@@ -108,37 +118,5 @@ router.get("/budget", useAuth,async (req, res) => {
   }
 });
 
-function totalUserExpense(totalBudgetData){
-  let totalExpense=0
-  for (var i=0; i< totalBudgetData.length; i++){
-    if(totalBudgetData[i].total_expense===null){
-      totalExpense += 0
-    } else {
-      totalExpense += totalBudgetData[i].total_expense
-    }
-  }
-  return totalExpense
-}
 
-function totalUserRevenue(totalBudgetData){
-     let totalRevenue=0;
-  for (var i=0; i< totalBudgetData.length; i++){
-  if(totalBudgetData[i].total_income===null){
-    totalRevenue += 0
-  } else {
-    totalRevenue += totalBudgetData[i].total_income
-  }
-  return totalRevenue
-}}
-
-function totalUserSaving(totalBudgetData){
-  let totalSavings=0;
-  for (var i=0; i< totalBudgetData.length; i++){
-  if(totalBudgetData[i].total_savings===null){
-    totalSavings += 0
-  } else {
-    totalSavings += totalBudgetData[i].total_savings
-  }
-  return totalSavings
-}}
 module.exports = router;

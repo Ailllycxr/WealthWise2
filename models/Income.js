@@ -25,13 +25,6 @@ Income.init(
         key: "id",
       },
     },
-    budget_id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "budget",
-        key: "id",
-      },
-    },
     amount: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
