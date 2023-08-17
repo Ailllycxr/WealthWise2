@@ -1,11 +1,11 @@
 const router = require("express").Router();
 const homeRoutes = require("./homeRoutes.js");
 const apiRoutes = require("./api");
-const createBudgetRoutes = require("./createBudget");
+const reflectionRoutes = require("./reflection");
 
 router.use("/", homeRoutes);
 router.use("/api", apiRoutes);
-router.use("/create", createBudgetRoutes);
+router.use("/reflection", reflectionRoutes);
 
 router.get('*', (req, res) => {
     res.render('404');

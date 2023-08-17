@@ -49,7 +49,7 @@ router.get("/items", useAuth, async (req, res) => {
   }
 });
 
-router.get("/budget",useAuth, async (req, res) => {
+router.get("/budget", useAuth,async (req, res) => {
   try {
   const totalBudget = await Budget.findAll({
       attributes:[
@@ -64,23 +64,37 @@ router.get("/budget",useAuth, async (req, res) => {
         user_budget_id: req.session.user_id,
       },
     })
-    const totalBudgetData = totalBudget.map(budget => budget.get({plain : true}));
+  
+  // const dailyExpense = await Expense.findAll({
+  //   attributes:[
+  //     "date",
+  //     // [sequelize.fn('sum', sequelize.col('amount')), 'total_amount']
+  //   ], 
 
+  //   // group: ['date'],
+  //   where:{
+  //     user_expense_id: req.session.user_id,
+  //   },
+  // })
+    const totalBudgetData = totalBudget.map(budget => budget.get({plain : true}));
+    // const dailyExpensetData = dailyExpense.map(expense => expense.get({plain : true}));
+    // const dailyRevenueData = dailyExpense.map(revenue => revenue.get({plain : true}));
     renderTotalExpense = totalUserExpense(totalBudgetData)
     renderTotalRevenue = totalUserRevenue(totalBudgetData)
+    // console.log(dailyExpensetData);
 
-  const dailyExpense = await Expense.findAll({
-    attributes:[
-      "date",
-      'amount',
-    ],  
-    group: ['date'],
-    where:{
-      user_budget_id: req.session.user_id,
-    },
-  })
-  const dailyExpenseData = dailyExpense.map(data => data.get({plain : true}));
-  console.log(dailyExpenseData);
+  // const dailyRevenue = await Income.findAll({
+  //   attributes:[
+  //     "date",
+  //     'amount',
+  //   ],  
+  //   group: ['date'],
+  //   where:{
+  //     user_budget_id: req.session.user_id,
+  //   },
+  // })
+  // const dailyRevenueData = dailyRevenue.map(data => data.get({plain : true}));
+  // console.log(dailyRevenueData);
 
     res.render("budgetAnalysis", {
       logged_in: req.session.logged_in,
@@ -89,6 +103,7 @@ router.get("/budget",useAuth, async (req, res) => {
 
     }); 
   } catch (err) {
+    console.log(err)
     res.status(500).json(err);
   }
 });
