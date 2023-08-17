@@ -1,6 +1,9 @@
-{{!-- <script src="/js/budgetAnalysis.js"></script> --}}
-<div class="d-flex flex-row mb-12">
-      <div class="d-flex flex-column mb-4">
+
+<div class="d-flex flex-row col-12 m-6">
+  {{!-- card1 --}}
+
+      <div class="d-flex flex-column col-8">
+    {{!-- chart1 --}}
         <div class="card border-0 m-6"> 
           <div class="card-body m-6">
             <canvas
@@ -9,37 +12,31 @@
             ></canvas>
           </div>
         </div>
-
+   {{!-- chart2 --}}
         <div class="card border-0 m-6">
           <div class="card-body">
             <canvas
               id="expense-chart"
               style="width: 100%; max-width: 600px"
             ></canvas>
-   
            </div>
           </div>
         </div>
-      
-
-      <div class="d-flex flex-column mb-8">
-        <div class="card border-0 h-75">
-          <div class = "card-body">
+    {{!-- card2 --}}
+  
+      <div class="d-flex flex-column col-4">
+        {{!-- chart3 --}}
+        <div class="card border-0">
+          <div class = "card-body h-75 m-6">
           <canvas id="budget-trend" style="width: 100%; max-width: 600px" class = "h-100"></canvas>
-
-       
           </div>
         </div>
 
-        <div class="card border-0 h-25">
-          <div class="card-title fs-3">Insights</div>
+        <div class="card bg-warning-subtle border-0 m-4 pb-5">
+           <div class="card-body h-25">  
+             <div class="card-title fs-3">Insights</div>         
               <p>(1) Your total monthly income of the month is USD {{renderTotalExpense}} </p>
               <p>(2) Your total monthly expense of the month is USD {{renderTotalRevenue}}</p>
-              <p>(3) The gap you can close in your budget is{{renderTotalSavings}}. You can plan how to utilize the money to generate more income.</p>
-            </h>
-          <p></p>
-          <p></p>
-          <div class="card-body">  
           </div>
         </div>
 

@@ -49,36 +49,43 @@ router.get("/items", useAuth, async (req, res) => {
   }
 });
 
-router.get("/budget", useAuth, async (req, res) => {
+router.get("/budget",useAuth, async (req, res) => {
   try {
-    const totalBudget = await Budget.findAll({
+  const totalBudget = await Budget.findAll({
       attributes:[
         "id",
         'budget_name',
         "total_expense",
         "total_income",
-        "total_savings"
+        "total_savings",
+        "user_budget_id",
       ],
       where:{
         user_budget_id: req.session.user_id,
-      }
-      
+      },
     })
-    const  totalBudgetData = totalBudget.map(budget => budget.get({plain : true}));
-    
+    const totalBudgetData = totalBudget.map(budget => budget.get({plain : true}));
+
     renderTotalExpense = totalUserExpense(totalBudgetData)
     renderTotalRevenue = totalUserRevenue(totalBudgetData)
-    renderTotalSavings = totalUserSaving(totalBudgetData)
 
-    console.log(totalBudgetData);
-    console.log(renderTotalExpense);
- 
-    
+  const dailyExpense = await Expense.findAll({
+    attributes:[
+      "date",
+      'amount',
+    ],  
+    group: ['date'],
+    where:{
+      user_budget_id: req.session.user_id,
+    },
+  })
+  const dailyExpenseData = dailyExpense.map(data => data.get({plain : true}));
+  console.log(dailyExpenseData);
+
     res.render("budgetAnalysis", {
       logged_in: req.session.logged_in,
       renderTotalExpense,
       renderTotalRevenue,
-      renderTotalSavings
 
     }); 
   } catch (err) {
@@ -98,9 +105,6 @@ function totalUserExpense(totalBudgetData){
   return totalExpense
 }
 
-
-
-
 function totalUserRevenue(totalBudgetData){
      let totalRevenue=0;
   for (var i=0; i< totalBudgetData.length; i++){
@@ -112,8 +116,6 @@ function totalUserRevenue(totalBudgetData){
   return totalRevenue
 }}
 
-
-
 function totalUserSaving(totalBudgetData){
   let totalSavings=0;
   for (var i=0; i< totalBudgetData.length; i++){
@@ -124,5 +126,4 @@ function totalUserSaving(totalBudgetData){
   }
   return totalSavings
 }}
-
 module.exports = router;

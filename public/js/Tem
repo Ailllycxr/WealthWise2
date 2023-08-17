@@ -98,13 +98,9 @@ const calculateCategoryTotals = async (data) => {
 };
 
 
-var barColors = [
-  "#b18dff",
-  "#f8acff",
-  "#5c7aff",
-  "#f5f4e5",
-  "#101010",
-];
+
+
+//render income chart // you need the data in here
 const renderIncomepie= async(data)=> {
   const labels = Object.keys(data.totals);
   const values = Object.values(data.totals);
@@ -127,6 +123,7 @@ const renderIncomepie= async(data)=> {
       }});
   })};
 
+//render expense chart // you need the data in here
 const renderIncomeChart = async (data) => {
   const labels = Object.keys(data.totals);
   const values = Object.values(data.totals);
@@ -146,6 +143,7 @@ const renderIncomeChart = async (data) => {
   });
 };
 
+//render expense chart // you need the data in here
 const renderExpenseChart = async (data) => {
   const labels = Object.keys(data.totals);
   const values = Object.values(data.totals);
@@ -166,6 +164,7 @@ const renderExpenseChart = async (data) => {
 };
 
 
+//render income chart // you need the data in here
 const renderIncomeBar = async (data) => {
   const labels = Object.keys(data.totals);
   const values = Object.values(data.totals);
@@ -187,6 +186,7 @@ const renderIncomeBar = async (data) => {
   });
 }
 
+//show the chart you need the data in here
 const renderExpenseBar = async (data) => {
   const labels = Object.keys(data.totals);
   const values = Object.values(data.totals);
