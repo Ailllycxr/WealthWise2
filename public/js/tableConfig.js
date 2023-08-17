@@ -28,7 +28,7 @@ const createTable = async (location, path) => {
                 title: "Date",
                 field: "date",
                 formatter: "datetime",
-                formatterParams: { outputFormat: "YYYY-MM-DD" },
+                formatterParams: { outputFormat: "YYYY-MM" },
             },
         ],
     });

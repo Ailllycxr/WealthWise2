@@ -5,7 +5,8 @@ const sequelize = require("../config/connection");
 
 const seedAll = async () => {
   try {
-    await sequelize.sync({ force: true })
+    await sequelize.sync({ force: true })// the data will update/load every time
+    //seeding data with the functions
     await createUsers()
     await createUsersIncomes()
     await createUsersExpenses()

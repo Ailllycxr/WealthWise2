@@ -15,4 +15,7 @@ const createUsersExpenses = async () => {
       await Expense.bulkCreate(expenses);
     }
 };
+
+console.log(createUsersExpenses)
 module.exports = createUsersExpenses;
+
