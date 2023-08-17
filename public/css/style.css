@@ -6,7 +6,7 @@
   /* Colors */
   --light-purple: #b18dff;
   --light-pink: #f8acff;
-  --light-blue: #5c7aff;
+  --light-green: #5cffec;
   --off-white: #f5f4e5;
   --black: #101010;
 
@@ -83,7 +83,7 @@ button:active {
 /* Header Styles */
 .header {
   border-bottom: 1px solid var(--black);
-  background-color: var(--light-blue);
+  background-color: var(--light-green);
 }
 
 .navbar {
@@ -129,7 +129,7 @@ button:active {
 .nav-logo {
   font-size: 2rem;
   font-weight: 700;
-  color: var(--off-white);
+  color: var(--black);
 }
 
 /* Main Styles */
@@ -146,6 +146,7 @@ button:active {
 }
 
 .welcome-text-container {
+  font-size:xx-large;
   width: 50%;
   padding: 2rem;
 }
@@ -234,7 +235,7 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--light-blue);
+  background-color: var(--light-green);
   padding: 1rem 1.5rem;
   border-top: 1px solid var(--black);
 }
