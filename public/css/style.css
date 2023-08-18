@@ -224,11 +224,6 @@ button:active {
   transition: 0.3s;
 }
 
-.create-budget-section {
-  display: flex;
-  justify-content: space-evenly;
-  width: 100vw;
-}
 
 /* Footer Styles */
 footer {
@@ -336,4 +331,28 @@ footer p {
   .footer-links {
     flex-direction: column;
   }
+}
+
+.create-budget-section {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100vw;
+}
+
+.create-budget-section {
+  flex-direction: row;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+#incomePie {
+  height: 300px !important;
+  margin: 0 !important;
+  width: 500px !important;
+}
+
+
+#expensePie {
+  height: 300px !important;
+  margin: 0 !important;
 }

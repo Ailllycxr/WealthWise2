@@ -1,15 +1,6 @@
 const incomePie = document.querySelector("#incomePie");
 const expensePie = document.querySelector("#expensePie");
 
-// const totalRevenue= document.querySelector("#totalRevenue");
-
-
-// const chartRevenueData1 =  getIncomeItems(user_id)
-// const chartExpenseeData1 =  getExpenseItems(user_id)
-// 
-// totalRevenue=chartExpenseeData1.total
-
-
 const colors =[
 "#9FE2BF",
 "#53BDAS",
@@ -80,8 +71,16 @@ const renderIncomePie= async(user_id)=> {
           {
               backgroundColor: colors,
               data: values,
+      
           },
-          ],
+          ]},
+          options: {
+          plugins: {
+            title: {
+                display: true,
+                text: "Monthly Revenue"
+            }
+          }
       },
   })};
 
@@ -101,7 +100,16 @@ const renderExpensePie= async(user_id)=> {
                 data: values,
             },
             ],
+          
         },
+        options: {
+        plugins: {
+          title: {
+              display: true,
+              text: "Monthly Expense"
+          }
+        }
+      }
     })};
 
 const init = async () => {
