@@ -90,37 +90,6 @@ router.get("/:user", useAuth, async (req, res) => {
   }
 });
 
-router.get("/:id", useAuth, async (req, res) => {
-  console.log("helloe")
-  try {
-    const findExpense = await Expense.findOne({
-      attributes: [
-        "id",
-        "expense_name",
-        "user_expense_id",
-        "amount",
-        "description",
-        "category",
-        "date",
-      ],
-      where: {
-        id: req.params.id,
-      },
-      include: [
-        {
-          model: User,
-          attributes: ["id", "username"],
-        },
-      ],
-    });
-    res.json(findExpense);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-
-
 router.post("/", useAuth, async (req, res) => {
   try {
     const createExpense = await Expense.create({

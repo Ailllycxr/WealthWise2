@@ -94,41 +94,6 @@ router.get('/:user', useAuth, async (req, res) => {
 });
 
 
-
-router.get('/:id', useAuth, async (req, res) => {
-    try {
-        const findIncome = await Income.findOne({
-            attributes: [
-                'id',
-                'income_name',
-                'user_income_id',
-                'amount',
-                'description',
-                'category',
-                'date'
-            ],
-            where: {
-                id: req.params.id,
-            },
-            include: [
-                {
-                model: User,
-                attributes: [
-                    'id',
-                    'username'
-                ]
-            }
-        ],
-        });
-        console.log(findIncome);
-        res.json(findIncome);
-    } catch (err) {
-        res.status(500).json(err);
-    }
-
-})
-
-
 router.post('/', useAuth, async (req, res) => {
     try { console.log(req);
         const createIncome = await Income.create({

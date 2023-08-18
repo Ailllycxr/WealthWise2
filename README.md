@@ -103,7 +103,8 @@ Click the blue button to get to a analysis snapshot.
 
 ## Author Info
 
-### To be Determined. Created by people love programming
+### Xiaoran Cai 
+### people who love programming
 
 ## Credits
 
