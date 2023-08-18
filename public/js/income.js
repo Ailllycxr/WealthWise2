@@ -68,7 +68,7 @@ const createIncomeTable = async () => {
     width: "30vh",
     columns: [
       { title: "ID", field: "id", visible: false },
-      { title: "Income Name", field: "income_name" },
+      { title: "Transaction Name", field: "income_name" },
       {
         title: "Amount",
         field: "amount",

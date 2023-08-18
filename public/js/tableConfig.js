@@ -44,7 +44,7 @@ const getTableData = async (path) => {
         if (response.ok) {
             return response.json();
         } else {
-            throw new Error(`Error fetching data. Status: ${response.status}`);
+            throw new Error(`Error Status: ${response.status}`);
         }
     } catch (err) {
         console.error("Error:", err);

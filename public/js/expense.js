@@ -74,7 +74,7 @@ const createExpenseTable = async () => {
     columns: [
       { title: "ID", field: "id", visible: false },
       {
-        title: "Expense Name",
+        title: "Transaction Name",
         field: "expense_name",
         frozen: true,
         resizable: false,

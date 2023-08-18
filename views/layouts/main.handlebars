@@ -37,7 +37,21 @@
           <li class="nav-item"><a href="/"><span
                 aria-hidden="true"
               >Home</span></a></li>
-          {{#unless logged_in}}
+          {{#if logged_in}}
+            <li class="nav-item"><a href="/logout" id="logout"><span
+                  aria-hidden="true"
+                >Logout</span></a></li>
+            <li class="nav-item"><a href="/reflection"><span
+                  aria-hidden="true"
+                >Ready Go!</span></a></li>
+          {{else}}
+            <li class="nav-item"><a href="/login"><span aria-hidden="true">
+                  Login</span></a></li>
+            <li class="nav-item"><a href="/signup"><span
+                  aria-hidden="true"
+                >Signup</span></a></li>
+          {{/if}}
+          {{!-- {{#unless logged_in}}
             <li class="nav-item"><a href="/login" id="login"><span
                   aria-hidden="true"
                 >Login</span></a></li>
@@ -45,14 +59,13 @@
                   aria-hidden="true"
                 >SignUp</span></a></li>
           {{else}}
-            {{! TODO: Placeholder needs to be updated for routes. }}
             <li class="nav-item"><a href="/reflection"><span
                   aria-hidden="true"
                 >Ready Go!</span></a></li>
             <li class="nav-item"><a href="/logout"><span
                   aria-hidden="true"
-                >Logout</span></a></li>
-          {{/unless}}
+                >Logout</span></a></li> --}}
+          {{!-- {{/unless}} --}}
         </ul>
         <div class="hamburger">
           <div class="line"></div>
