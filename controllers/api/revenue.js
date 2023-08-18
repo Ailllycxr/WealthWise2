@@ -96,7 +96,6 @@ router.get('/:user', useAuth, async (req, res) => {
 
 
 router.get('/:id', useAuth, async (req, res) => {
-    console.log("HEOLLO**************************")
     try {
         const findIncome = await Income.findOne({
             attributes: [

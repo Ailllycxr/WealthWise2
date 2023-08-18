@@ -333,13 +333,13 @@ footer p {
   }
 }
 
-.create-budget-section {
+.create-analysis-section {
   display: flex;
   justify-content: space-evenly;
   width: 100vw;
 }
 
-.create-budget-section {
+.create-analysis-section {
   flex-direction: row;
   align-items: center;
   margin-top: 1rem;
