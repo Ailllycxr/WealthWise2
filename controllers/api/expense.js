@@ -33,7 +33,65 @@ router.get("/", useAuth, async (req, res) => {
   }
 });
 
+router.get("/:user", useAuth, async (req, res) => {
+
+  try {
+    const findExpense = await Expense.findAll({
+      where: {
+        user_expense_id: req.params.user,
+      },
+    });
+
+  if (!findExpense) {
+      res.status(404).json({ message: 'No expense found with this user id'});
+      return;
+  }
+  const expenseUserData = findExpense.map(expense => expense.get({plain : true}));
+  
+  const mapExpense =new Map ()
+  for (const eachExpense of expenseUserData) {
+      if (mapExpense.has(eachExpense.category)) {
+        mapExpense.set(eachExpense.category,mapExpense.get(eachExpense.category)+eachExpense.amount)
+      } else {
+        mapExpense.set (eachExpense.category,eachExpense.amount)
+
+      }
+  }
+  
+          const expenseCategoryArray  = []
+          const categories= mapExpense.keys()
+          for (const category of categories){
+            expenseCategoryArray.push(category)
+          }
+          
+          const expenseArray  = []
+          const expense= mapExpense.values()
+          for (const amount of expense){
+              expenseArray.push(amount)
+          }
+       
+         
+          const total = expenseArray.reduce((a,c)=> a+c)
+          const expenseArrayPer = expenseArray.map ((amount) =>(amount/total))
+          
+          console.log(expenseArrayPer)
+
+          let responseExpenseData = {
+            expenseUserData:expenseUserData,
+            expenseCategoryArray:expenseCategoryArray ,
+            expenseArrayPer:expenseArrayPer,
+            total:total
+        }
+        console.log(responseExpenseData)
+        
+    res.json(responseExpenseData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.get("/:id", useAuth, async (req, res) => {
+  console.log("helloe")
   try {
     const findExpense = await Expense.findOne({
       attributes: [
@@ -55,26 +113,13 @@ router.get("/:id", useAuth, async (req, res) => {
         },
       ],
     });
-    console.log(findExpense);
     res.json(findExpense);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-router.get("/:user", useAuth, async (req, res) => {
-  try {
-    const findExpense = await Expense.findAll({
-      where: {
-        user_expense_id: req.params.user,
-      },
-    });
-    
-    res.json(findExpense);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+
 
 router.post("/", useAuth, async (req, res) => {
   try {
@@ -85,7 +130,6 @@ router.post("/", useAuth, async (req, res) => {
       category: req.body.category,
       user_expense_id: req.session.user_id,
     });
-    console.log(createExpense);
     res.json(createExpense);
   } catch (err) {
     console.log(err);
@@ -115,7 +159,7 @@ router.put("/:id", useAuth, async (req, res) => {
           message: "Please provide a name, category, and amount to the expense",
         });
     }
-    console.log(updateExpense);
+
     res.json(updateExpense);
   } catch (err) {
     console.log(err);
